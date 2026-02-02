@@ -1,0 +1,252 @@
+:root {
+  /* Warm Coral & Cream Palette */
+  --bg1: #ffecd2;
+  --bg2: #fcb69f;
+  --card: #ffffffeb;
+  --yes: #ff6b6b;
+  --yesHover: #ff4757;
+  --text: #4a4a4a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+  padding: 16px;
+  color: var(--text);
+}
+
+/* FLOATING HEARTS BACKGROUND */
+.bg-hearts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.heart-bg {
+  position: absolute;
+  bottom: -10vh;
+  background-color: rgba(255, 255, 255, 0.4);
+  clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-120vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* FULL-SCREEN CONFETTI CANVAS */
+#confettiCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.card {
+  width: min(720px, 92vw);
+  padding: 30px 24px;
+  background: var(--card);
+  backdrop-filter: blur(14px);
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+  z-index: 10;
+}
+
+.art {
+  width: min(260px, 80vw);
+  margin: 0 auto 10px;
+  display: block;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .12));
+}
+
+h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  margin: 14px 0 20px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #ff4757;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+}
+
+.button-zone {
+  position: relative;
+  width: min(520px, 92%);
+  height: 160px;
+  margin: 0 auto;
+  touch-action: none;
+}
+
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 18px 32px;
+  font-size: 20px;
+  font-weight: 800;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .14);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .12s ease, background .12s ease;
+  font-family: 'Nunito', sans-serif;
+}
+
+#yesBtn {
+  left: 18%;
+  background: var(--yes);
+  color: #fff;
+}
+
+#yesBtn:hover {
+  background: var(--yesHover);
+  transform: translateY(-50%) scale(1.05);
+}
+
+#noBtn {
+  left: 62%;
+  background: #fff;
+  color: #ff6b6b;
+  border: 2px solid #ff6b6b;
+}
+
+/* Back Button Styling */
+#backBtn {
+  position: static;
+  transform: none;
+  margin-top: 24px;
+  background: #eee;
+  color: #555;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: 2px solid #ddd;
+}
+
+#backBtn:hover {
+  background: #e0e0e0;
+}
+
+.hint {
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  opacity: .8;
+  color: #ff4757;
+}
+
+.result,
+.no-return {
+  display: none;
+  margin-top: 20px;
+  animation: pop .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.result h2,
+.no-return h2 {
+  font-size: clamp(32px, 5vw, 50px);
+  margin: 10px 0;
+  color: #ff4757;
+}
+
+.result-gif {
+  /* Keep media inside the card even on small screens (card padding reduces available width) */
+  width: min(400px, 100%);
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  border-radius: 16px;
+  min-height: 200px;
+  object-fit: contain;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(.90);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Phone tweaks: keep layout readable and prevent button crowding */
+@media (max-width: 420px) {
+  body {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 22px 16px;
+    border-radius: 22px;
+  }
+
+  .art {
+    width: min(220px, 74vw);
+  }
+
+  .button-zone {
+    height: 190px;
+  }
+
+  button {
+    padding: 16px 26px;
+    font-size: 18px;
+  }
+
+  .result-gif {
+    min-height: 160px;
+  }
+
+  #yesBtn {
+    left: 10%;
+  }
+
+  #noBtn {
+    left: 55%;
+  }
+}
+
+@media (max-height: 600px) {
+  .art {
+    margin-bottom: 6px;
+  }
+
+  h1 {
+    margin-bottom: 16px;
+  }
+}
