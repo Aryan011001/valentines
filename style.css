@@ -81,6 +81,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.6);
   position: relative;
   z-index: 10;
+
+  /* Prevent tall content (result GIF) from pushing the back button off-screen */
+  max-height: calc(100vh - 32px);
+  max-height: calc(100svh - 32px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .art {
@@ -188,7 +194,9 @@ button {
   margin: 0 auto;
   display: block;
   border-radius: 16px;
-  min-height: 200px;
+
+  /* Cap height so the back button remains visible without resizing the window */
+  max-height: 42svh;
   object-fit: contain;
 }
 
