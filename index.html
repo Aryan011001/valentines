@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -8,26 +9,72 @@
   <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
+  <!-- Google Fonts: Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg1: #ffd6e7;
-      --bg2: #ffeef6;
-      --card: #ffffffcc;
-      --yes: #ff3b7a;
-      --yesHover: #ff1f68;
+      /* Warm Coral & Cream Palette */
+      --bg1: #ffecd2;
+      --bg2: #fcb69f;
+      --card: #ffffffeb;
+      --yes: #ff6b6b;
+      --yesHover: #ff4757;
+      --text: #4a4a4a;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       min-height: 100svh;
       display: grid;
       place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
-      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+      font-family: 'Nunito', sans-serif;
       overflow: hidden;
       padding: 16px;
+      color: var(--text);
+    }
+
+    /* FLOATING HEARTS BACKGROUND */
+    .bg-hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .heart-bg {
+      position: absolute;
+      bottom: -10vh;
+      background-color: rgba(255, 255, 255, 0.4);
+      clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(-120vh) scale(1.5);
+        opacity: 0;
+      }
     }
 
     /* FULL-SCREEN CONFETTI CANVAS */
@@ -42,30 +89,38 @@
 
     .card {
       width: min(720px, 92vw);
-      padding: 26px 22px;
+      padding: 30px 24px;
       background: var(--card);
-      backdrop-filter: blur(10px);
-      border-radius: 22px;
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
       text-align: center;
-      box-shadow: 0 18px 60px rgba(0,0,0,.15);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      position: relative;
+      z-index: 10;
     }
 
-    .art {
-      width: min(260px, 80vw);
-      margin: 0 auto 10px;
+    .art-gif {
+      width: min(280px, 80vw);
+      margin: 0 auto 12px;
       display: block;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));
+      /* Ensure clean rendering */
+      image-rendering: auto;
     }
 
     h1 {
-      font-size: clamp(26px, 4vw, 44px);
-      margin: 12px 0 18px;
+      font-size: clamp(28px, 5vw, 48px);
+      margin: 14px 0 20px;
+      font-weight: 900;
+      line-height: 1.2;
+      color: #ff4757;
+      text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
     }
 
     .button-zone {
       position: relative;
       width: min(520px, 92%);
-      height: 150px;
+      height: 160px;
       margin: 0 auto;
       touch-action: none;
     }
@@ -74,16 +129,17 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      padding: 16px 24px;
-      font-size: 18px;
+      padding: 18px 32px;
+      font-size: 20px;
       font-weight: 800;
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0,0,0,.14);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .14);
       user-select: none;
       -webkit-tap-highlight-color: transparent;
       transition: transform .12s ease, background .12s ease;
+      font-family: 'Nunito', sans-serif;
     }
 
     #yesBtn {
@@ -91,103 +147,87 @@
       background: var(--yes);
       color: #fff;
     }
-    #yesBtn:hover { background: var(--yesHover); }
+
+    #yesBtn:hover {
+      background: var(--yesHover);
+      transform: translateY(-50%) scale(1.05);
+    }
 
     #noBtn {
       left: 62%;
-      background: #e5e7eb;
-      color: #111827;
+      background: #fff;
+      color: #ff6b6b;
+      border: 2px solid #ff6b6b;
     }
 
     .hint {
-      margin-top: 10px;
-      font-size: 13px;
-      opacity: .7;
+      margin-top: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      opacity: .8;
+      color: #ff4757;
     }
 
     .result {
       display: none;
-      margin-top: 18px;
-      animation: pop .35s ease;
+      margin-top: 20px;
+      animation: pop .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
 
     .result h2 {
-      font-size: clamp(30px, 4.5vw, 46px);
+      font-size: clamp(32px, 5vw, 50px);
       margin: 10px 0;
+      color: #ff4757;
     }
 
-    .fireworks {
-      width: min(380px, 90vw);
+    .result-gif {
+      width: min(400px, 90vw);
       margin: 0 auto;
       display: block;
+      border-radius: 16px;
     }
 
     @keyframes pop {
-      from { transform: scale(.96); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(.90);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
   </style>
 </head>
 
 <body>
+  <!-- Floating Hearts Background -->
+  <div class="bg-hearts" id="heartsContainer"></div>
+
   <canvas id="confettiCanvas"></canvas>
 
   <main class="card">
-    <!-- ANIMAL WITH HEART -->
-    <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fur" x1="0" x2="1">
-          <stop offset="0" stop-color="#f7c7a1"/>
-          <stop offset="1" stop-color="#f2a97b"/>
-        </linearGradient>
-        <linearGradient id="heart" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff4d7d"/>
-          <stop offset="1" stop-color="#ff1f68"/>
-        </linearGradient>
-      </defs>
 
-      <path d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z"
-            fill="url(#heart)"/>
+    <!-- REPLACED SVG WITH GIF -->
+    <img class="art-gif" src="https://media.tenor.com/f0u1v79_cOIAAAAj/milk-and-mocha-bear.gif"
+      alt="Cute bear holding heart" />
 
-      <path d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z"
-            fill="url(#fur)"/>
-
-      <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
-      <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
-
-      <circle cx="160" cy="130" r="8"/>
-      <circle cx="220" cy="130" r="8"/>
-
-      <path d="M190 144 C186 144 182 148 182 152
-               C182 160 190 164 190 170
-               C190 164 198 160 198 152
-               C198 148 194 144 190 144Z"
-            fill="#ff7aa2"/>
-    </svg>
-
-    <h1>Golu will you be my valentine?</h1>
+    <h1>Golu will you be my valentine? 🌹</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
       <button id="noBtn">No</button>
     </section>
 
-    <!-- HINT -->
-    <div class="hint" id="hint">“No” seems a bit shy 😈</div>
+    <!-- UPDATED HINT -->
+    <div class="hint" id="hint">Resistance is futile! 💖</div>
 
     <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
-      <img
-        class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-        alt="Fireworks"
-      />
+      <!-- UPDATED SUCCESS TEXT -->
+      <h2>Obvio! 💖✨</h2>
+      <!-- UPDATED SUCCESS GIF -->
+      <img class="result-gif" src="https://media.tenor.com/F3bC8c8a1e8AAAAj/bubu-dudu-kiss.gif" alt="Romantic Hug" />
     </section>
   </main>
 
@@ -197,6 +237,25 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+
+    /* ---------- BACKGROUND HEARTS ---------- */
+    const heartsContainer = document.getElementById("heartsContainer");
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart-bg");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+      heart.style.width = Math.random() * 20 + 10 + "px";
+      heart.style.height = heart.style.width;
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+    // Create hearts periodically
+    setInterval(createHeart, 600);
+
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -266,13 +325,15 @@
       dy /= mag;
 
       let newLeft = (b.left - z.left) + dx * 150;
-      let newTop  = (b.top - z.top) + dy * 150;
+      let newTop = (b.top - z.top) + dy * 150;
 
       newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop  = clamp(newTop, 0, z.height - b.height);
+      newTop = clamp(newTop, 0, z.height - b.height);
 
       noBtn.style.left = newLeft + "px";
       noBtn.style.top = newTop + "px";
+      // Ensure specific transform reset while keeping others if needed, 
+      // but here 'none' is safe as we only animate scale on Yes
       noBtn.style.transform = "none";
 
       growYes();
@@ -299,4 +360,5 @@
     });
   </script>
 </body>
+
 </html>
